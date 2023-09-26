@@ -7,15 +7,16 @@
 #                                     CONFIG                                   #
 ################################################################################
 
-NAME        := phonebook
+NAME        := Account
 CC         := c++
-FLAGS    := -Wall -Wextra -Werror -std=c++98 -g
+FLAGS    := -Wall -Wextra -Werror -std=c++98
  
 ################################################################################
 #                                 PROGRAM'S SRCS                               #
 ################################################################################
 
-SRCS        :=      phonebook.cpp \
+SRCS        :=      tests.cpp \
+                          Account.cpp \
                           
 OBJS        := ${SRCS:.cpp=.o}
 

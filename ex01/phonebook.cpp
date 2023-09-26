@@ -1,34 +1,37 @@
-#include <iostream>
-#include <iomanip>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   phonebook.cpp                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/26 14:05:43 by mneri             #+#    #+#             */
+/*   Updated: 2023/09/26 15:34:49 by mneri            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-class Contact
-{
-	public:
-		std::string first_name;
-		std::string last_name;
-		std::string nick_name;
-		std::string dark_secret;
-		std::string	phone_num;
-};
 
-class PhoneBook
-{
-	public:
-		Contact contact[8];
-};
+#include "phonebook.hpp"
 
 void	add(PhoneBook *book, int i)
 {
+	std::string fname, lname, nname, dsecret, pnum;
+	
 	std::cout << "first name: ";
-	std::cin >> book->contact[i].first_name;
+	std::cin >> fname;
+	book->contact[i].setFirstName(fname);
 	std::cout << "last name: ";
-	std::cin >> book->contact[i].last_name;
+	std::cin >> lname;
+	book->contact[i].setLastName(lname);
 	std::cout << "nick name: ";
-	std::cin >> book->contact[i].nick_name;
+	std::cin >> nname;
+	book->contact[i].setNickName(nname);
 	std::cout << "dark secret: ";
-	std::cin >> book->contact[i].dark_secret;
+	std::cin >> dsecret;
+	book->contact[i].setDarkSecret(dsecret);
 	std::cout << "phone number: ";
-	std::cin >> book->contact[i].phone_num;
+	std::cin >> pnum;
+	book->contact[i].setPhoneNumber(pnum);
 
 }
 
@@ -43,9 +46,9 @@ void	show_table(PhoneBook *book)
 	for (i = 0; i < 8; i++)
 	{
 		std::cout << std::setw(10) << (i +1) << " | "
-                  << std::setw(10) << std::right << (book->contact[i].first_name.length() > 10 ? book->contact[i].first_name.substr(0, 9) + "." : book->contact[i].first_name) << " | "
-                  << std::setw(10) << std::right << (book->contact[i].last_name.length() > 10 ? book->contact[i].last_name.substr(0, 9) + "." : book->contact[i].last_name) << " | "
-                  << std::setw(10) << std::right << (book->contact[i].nick_name.length() > 10 ? book->contact[i].nick_name.substr(0, 9) + "." : book->contact[i].nick_name) << std::endl;
+        << std::setw(10) << std::right << (book->contact[i].getFirstName().length() > 10 ? book->contact[i].getFirstName().substr(0, 9) + "." : book->contact[i].getFirstName()) << " | "
+        << std::setw(10) << std::right << (book->contact[i].getLastName().length() > 10 ? book->contact[i].getLastName().substr(0, 9) + "." : book->contact[i].getLastName()) << " | "
+        << std::setw(10) << std::right << (book->contact[i].getNickName().length() > 10 ? book->contact[i].getNickName().substr(0, 9) + "." : book->contact[i].getNickName()) << std::endl;
 	}
 	
 }
@@ -62,11 +65,11 @@ void	index_select(PhoneBook *book)
 	}
 	else
 	{
-		std::cout << "First Name: " << book->contact[index - 1].first_name << std::endl;
-		std::cout << "Last Name: " << book->contact[index - 1].last_name << std::endl;
-		std::cout << "Nick Name: " << book->contact[index - 1].nick_name << std::endl;
-		std::cout << "Dark secret: " << book->contact[index - 1].dark_secret << std::endl;
-		std::cout << "Phone number: " << book->contact[index - 1].phone_num << std::endl;
+		std::cout << "First Name: " << book->contact[index - 1].getFirstName() << std::endl;
+		std::cout << "Last Name: " << book->contact[index - 1].getLastName() << std::endl;
+		std::cout << "Nick Name: " << book->contact[index - 1].getNickName() << std::endl;
+		std::cout << "Dark secret: " << book->contact[index - 1].getDarkSecret() << std::endl;
+		std::cout << "Phone number: " << book->contact[index - 1].getPhoneNumber() << std::endl;
 	}
 }
 
@@ -75,9 +78,8 @@ int main()
 	PhoneBook book;
 	std::string command;
 	int i = 0;
-	int exit = 1;
 
-	while(exit == 1)
+	while(1)
 	{
 		std::cout << "\nADD to add contact | SEARCH to search contact | EXIT to exit program\n";
 		std::cin >> command;
@@ -91,6 +93,7 @@ int main()
 		{
 			show_table(&book);
 			index_select(&book);
+			std::cin.clear();
 		}
 		else if(command.compare("EXIT") == 0)
 		{
